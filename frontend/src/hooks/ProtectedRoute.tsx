@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ user, children, redirect }: any) => {
+const ProtectedRoute = ({ user, access, redirect }: any) => {
   return !user ? (
     <Navigate to={redirect} replace />
-  ) : children ? (
-    children
+  ) : access ? (
+    access
   ) : (
     <Outlet />
   );
