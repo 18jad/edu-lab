@@ -10,13 +10,13 @@ const LandingPage = () => {
         <Logo />
       </header>
       <div className={styles.selectionWrapper}>
-        <Link to='/dsf' className={styles.link}>
+        <Link to='/student/login' className={styles.link}>
           <UserSelection type='student' />
         </Link>
-        <Link to='/dsf' className={styles.link}>
+        <Link to='/admin/login' className={styles.link}>
           <UserSelection type='admin' />
         </Link>
-        <Link to='/dsf' className={styles.link}>
+        <Link to='/instructor/login' className={styles.link}>
           <UserSelection type='instructor' />
         </Link>
       </div>
