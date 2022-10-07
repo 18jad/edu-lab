@@ -1,19 +1,22 @@
-import styles from "./App.module.scss";
-import Logo from "./components/Logo";
-import UserSelection from "./components/UserSelection";
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
-    <div className={styles.wrapper}>
-      <header className={styles.header}>
-        <Logo />
-      </header>
-      <div className={styles.selectionWrapper}>
-        <UserSelection type='student' />
-        <UserSelection type='admin' />
-        <UserSelection type='instructor' />
-      </div>
-    </div>
+    <Routes>
+      <Route path='/' element={<LandingPage />} />
+      <Route path='/admin'>
+        <Route path='login' element={<LandingPage />} />
+      </Route>
+      <Route path='/insturctor'>
+        <Route path='login' element={<LandingPage />} />
+      </Route>
+      <Route path='/student'>
+        <Route path='login' element={<LandingPage />} />
+      </Route>
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   );
 };
 
