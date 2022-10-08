@@ -1,0 +1,61 @@
+$f-color: #333;
+$white: #fff;
+$side-bg: rgba($white, 0.4);
+
+.sidebarWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100%;
+  width: 280px;
+  background: $side-bg;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border-right: 1px solid $f-color;
+
+  header {
+    text-transform: capitalize;
+    font-size: 24px;
+    font-weight: 600;
+    color: $f-color;
+    border-bottom: 1px solid $f-color;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .listBody {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+
+    .listLink {
+      text-decoration: none;
+      width: 100%;
+
+      .listBullet {
+        color: #333;
+        font-size: 24px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        transition: all 200ms ease-in-out;
+
+        &:hover {
+          background: darken($side-bg, 20%);
+        }
+
+        .listText {
+          width: 100px;
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}
