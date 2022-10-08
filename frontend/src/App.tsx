@@ -1,7 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./hooks/ProtectedRoute";
+import AdminCourses from "./pages/AdminCourses";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminInstructor from "./pages/AdminInstructor";
 import AdminLogin from "./pages/AdminLogin";
+import AdminStudents from "./pages/AdminStudents";
 import InstructorLogin from "./pages/InstructorLogin";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
@@ -28,7 +31,25 @@ const App = () => {
             <ProtectedRoute
               user={true}
               redirect='../login'
-              access={<InstructorLogin />}
+              access={<AdminStudents />}
+            />
+          }></Route>
+        <Route
+          path='dashboard/instructors'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<AdminInstructor />}
+            />
+          }></Route>
+        <Route
+          path='dashboard/courses'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<AdminCourses />}
             />
           }></Route>
       </Route>
