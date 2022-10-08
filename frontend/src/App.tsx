@@ -22,6 +22,15 @@ const App = () => {
               access={<AdminDashboard />}
             />
           }></Route>
+        <Route
+          path='dashboard/students'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<InstructorLogin />}
+            />
+          }></Route>
       </Route>
       <Route path='/instructor'>
         <Route path='login' element={<InstructorLogin />} />
