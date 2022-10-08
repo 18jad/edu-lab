@@ -16,7 +16,7 @@ const Sidebar = ({ type }: any) => {
               <span className={styles.listText}>Students</span>
             </li>
           </Link>
-          <Link to='/admin/dashboard/instructor' className={styles.listLink}>
+          <Link to='/admin/dashboard/instructors' className={styles.listLink}>
             <li className={styles.listBullet}>
               <Instructor height='30' />
               <span className={styles.listText}>Instructors</span>
