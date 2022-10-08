@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./hooks/ProtectedRoute";
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import InstructorLogin from "./pages/InstructorLogin";
 import LandingPage from "./pages/LandingPage";
@@ -11,6 +13,15 @@ const App = () => {
       <Route path='/' element={<LandingPage />} />
       <Route path='/admin'>
         <Route path='login' element={<AdminLogin />} />
+        <Route
+          path='dashboard'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<AdminDashboard />}
+            />
+          }></Route>
       </Route>
       <Route path='/instructor'>
         <Route path='login' element={<InstructorLogin />} />
