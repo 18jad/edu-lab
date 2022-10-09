@@ -9,7 +9,7 @@ const Sidebar = ({ type }: any) => {
   return (
     <div className={styles.sidebarWrapper}>
       <header>{type}</header>
-      {type === "admin" ? (
+      {type.toLowerCase() === "admin" ? (
         <ul className={styles.listBody}>
           <Link to='/admin/dashboard/students' className={styles.listLink}>
             <li className={styles.listBullet}>
@@ -30,7 +30,7 @@ const Sidebar = ({ type }: any) => {
             </li>
           </Link>
         </ul>
-      ) : type === "instructor" ? (
+      ) : type.toLowerCase() === "instructor" ? (
         <ul className={styles.listBody}>
           <Link to='/instructor/dashboard/students' className={styles.listLink}>
             <li className={styles.listBullet}>
