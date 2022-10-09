@@ -75,11 +75,38 @@ $border-color: rgb(68, 68, 68);
     //   margin-left: 55px;
     // }
 
+    .rowId {
+      width: 50px;
+      white-space: nowrap;
+    }
+
     .rowName {
       text-align: center;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      max-width: 200px;
+      text-align: right;
+    }
+
+    .actionButton {
+      width: 70px;
+      text-align: center;
+      white-space: nowrap;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+      background: #fff9;
+      outline: none;
+      border: 1px solid $border-color;
+      transition: all 200ms ease-in-out;
+      font-size: 13px;
+
+      &:hover {
+        background: darken($color: #fff9, $amount: 10);
+        border-color: darken($border-color, 100%);
+      }
     }
   }
 }
@@ -160,4 +187,16 @@ $border-color: rgb(68, 68, 68);
     background: #fff;
     border-color: darken($border-color, 100%);
   }
+}
+
+.assignemntstable {
+  width: 60%;
+  background: #fefefe;
+  height: 80%;
+  overflow-y: auto;
+  margin-bottom: 55px;
+  color: var(--black);
+  border: 1px solid $border-color;
+  box-shadow: 0 5px 15px 1px #3333;
+  font-weight: 500;
 }
