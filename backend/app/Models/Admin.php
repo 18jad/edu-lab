@@ -10,7 +10,6 @@ use Jenssegers\Mongodb\Auth\User as Authenticatable;
 /**
  * @property mixed $username
  * @property mixed $password
- * @method static where(string $string, mixed $username)
  */
 
 class Admin extends Authenticatable implements JWTSubject
@@ -19,7 +18,7 @@ class Admin extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $connection = 'mongodb';
-    protected $collection = 'students';
+    protected $collection = 'admin';
 
     protected $fillable = [
         'username',
