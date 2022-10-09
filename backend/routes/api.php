@@ -28,7 +28,7 @@ Route::group(["prefix" => 'v1.0'], function() {
     Route::group(['prefix' => 'student'], function() {
         Route::controller(StudentsController::class)->group(function () {
             Route::post('login', 'login');
-            Route::middleware(['auth:api'])->group(function() {
+            Route::middleware(['auth:student'])->group(function() {
                 Route::get('logout', 'logout');
                 Route::post('submit_assignment', 'submitAssignment');
                 Route::get('courses', 'getEnrolledCourses');
@@ -38,7 +38,8 @@ Route::group(["prefix" => 'v1.0'], function() {
     Route::group(['prefix' => 'admin'], function() {
         Route::controller(AdminController::class)->group(function () {
             Route::post('login', 'login');
-            Route::middleware(['auth:api'])->group(function() {
+            Route::post('create', 'createAdmin');
+            Route::middleware(['auth:admin'])->group(function() {
                 Route::get('logout', 'logout');
                 Route::post('add_student', 'addStudent');
                 Route::post('add_instructor', 'addInstructor');
