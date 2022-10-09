@@ -12,6 +12,9 @@ import InstructorLogin from "./pages/InstructorLogin";
 import InstructorStudents from "./pages/InstructorStudents";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
+import StudentAssignments from "./pages/StudentAssignments";
+import StudentCourses from "./pages/StudentCourses";
+import StudentDashboard from "./pages/StudentDashboard";
 import StudentLogin from "./pages/StudentLogin";
 
 const App = () => {
@@ -98,6 +101,33 @@ const App = () => {
       </Route>
       <Route path='/student'>
         <Route path='login' element={<StudentLogin />} />
+        <Route
+          path='dashboard'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<StudentDashboard />}
+            />
+          }></Route>
+        <Route
+          path='dashboard/assignments'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<StudentAssignments />}
+            />
+          }></Route>
+        <Route
+          path='dashboard/courses'
+          element={
+            <ProtectedRoute
+              user={true}
+              redirect='../login'
+              access={<StudentCourses />}
+            />
+          }></Route>
       </Route>
       <Route path='*' element={<NotFound />} />
     </Routes>
