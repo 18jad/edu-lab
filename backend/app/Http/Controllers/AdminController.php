@@ -46,7 +46,8 @@ class AdminController extends Controller
         if (isset($request->name, $request->username, $request->password)) {
             $already_exists = Student::where('username', $request->username);
 
-            if($already_exists) {
+            // check if student user already exists
+            if($already_exists->count()) {
                 return response()->json([
                     'student' => 'Student username already exists',
                     'success' => false,
