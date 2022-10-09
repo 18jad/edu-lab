@@ -38,7 +38,6 @@ Route::group(["prefix" => 'v1.0'], function() {
     Route::group(['prefix' => 'admin'], function() {
         Route::controller(AdminController::class)->group(function () {
             Route::post('login', 'login');
-            Route::post('create', 'createAdmin');
             Route::middleware(['auth:admin'])->group(function() {
                 Route::get('logout', 'logout');
                 Route::post('add_student', 'addStudent');
