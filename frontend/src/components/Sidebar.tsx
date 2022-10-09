@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Announcements from "../icons/Announcement";
 import Courses from "../icons/Courses";
 import Instructor from "../icons/Instructor";
 import Student from "../icons/Student";
@@ -41,7 +42,7 @@ const Sidebar = ({ type }: any) => {
             to='/instructor/dashboard/assignments'
             className={styles.listLink}>
             <li className={styles.listBullet}>
-              <Student height='30' />
+              <Courses height='30' />
               <span className={styles.listText}>Assignments</span>
             </li>
           </Link>
@@ -49,7 +50,7 @@ const Sidebar = ({ type }: any) => {
             to='/instructor/dashboard/announcements'
             className={styles.listLink}>
             <li className={styles.listBullet}>
-              <Student height='30' />
+              <Announcements height='30' />
               <span className={styles.listText}>Announcements</span>
             </li>
           </Link>
