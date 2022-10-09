@@ -2,7 +2,7 @@ import Sidebar from "../components/Sidebar";
 import TableRow from "../components/TableRow";
 import styles from "../styles/AdminStudentsPage.module.scss";
 
-const AdminStudentsPage = () => {
+const AdminStudents = () => {
   return (
     <div className={styles.wrapper}>
       <Sidebar type='admin' />
@@ -52,4 +52,4 @@ const AdminStudentsPage = () => {
   );
 };
 
-export default AdminStudentsPage;
+export default AdminStudents;
