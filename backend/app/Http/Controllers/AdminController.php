@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use App\Models\Admin;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -31,6 +31,7 @@ class AdminController extends Controller
                 'message' => 'Username or password incorrect'
             ]) : response()->json([
                 'status' => true,
+                'message' => 'Successfully logged in',
                 'admin' => Auth::user(),
                 'authorization' => [
                     'auth_token' => $auth_token,
@@ -50,25 +51,69 @@ class AdminController extends Controller
             if($already_exists->count()) {
                 return response()->json([
                     'student' => 'Student username already exists',
-                    'success' => false,
+                    'status' => false,
                 ]);
             }
 
             $student->name = $request->name;
             $student->username = $request->username;
             $student->password = bcrypt($request->password);
+        }else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required',
+            ]);
         }
 
 
         if($student->save()) {
             return response()->json([
                 'student' => $student,
-                'success' => true,
+                'message' => 'Student successfully created',
+                'status' => true,
             ]);
         } else {
             return response()->json([
-                'student' => $student,
-                'success' => false,
+                'message' => 'Something is missing.',
+                'status' => false,
+            ]);
+        }
+    }
+
+    public function addInstructor(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $instructor = new Instructor();
+        if (isset($request->name, $request->username, $request->password)) {
+            $already_exists = Student::where('username', $request->username);
+
+            // check if instructor user already exists
+            if($already_exists->count()) {
+                return response()->json([
+                    'instructor' => 'Instructor username already exists',
+                    'status' => false,
+                ]);
+            }
+
+            $instructor->name = $request->name;
+            $instructor->username = $request->username;
+            $instructor->password = bcrypt($request->password);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required',
+             ]);
+        }
+
+        if($instructor->save()) {
+            return response()->json([
+                'instructor' => $instructor,
+                'message' => 'Instructor successfully created',
+                'status' => true,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong.',
+                'status' => false,
             ]);
         }
     }
