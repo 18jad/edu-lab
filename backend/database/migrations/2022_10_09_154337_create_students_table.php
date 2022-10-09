@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("username")->unique();
             $table->string("password");
             $table->string("enrolled_courses")->nullable(true);
+            $table->string("available_assignments")->nullable(true);
             $table->timestamp('created_at')->useCurrent();
         });
     }
