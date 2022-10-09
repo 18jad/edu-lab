@@ -101,7 +101,8 @@ $border-color: rgb(68, 68, 68);
     flex-direction: column;
     gap: 20px;
 
-    .input {
+    .input,
+    textarea {
       padding: 10px;
       width: 300px;
       border-radius: 6px;
@@ -115,6 +116,14 @@ $border-color: rgb(68, 68, 68);
         background: #fff;
         border-color: darken($border-color, 100%);
       }
+    }
+
+    textarea {
+      height: 200px;
+      resize: vertical;
+      max-height: 300px;
+      transition: none;
+      transition: background 200ms ease-in-out;
     }
   }
 
