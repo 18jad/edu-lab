@@ -12,6 +12,7 @@ use Jenssegers\Mongodb\Auth\User as Authenticatable;
  * @property mixed $name
  * @property mixed $password
  * @method static where(string $string, mixed $username)
+ * @method static select(string $string)
  */
 
 class Student extends Authenticatable implements JWTSubject
