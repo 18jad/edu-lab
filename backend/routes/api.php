@@ -42,6 +42,7 @@ Route::group(["prefix" => 'v1.0'], function() {
                 Route::get('logout', 'logout');
                 Route::post('add_student', 'addStudent');
                 Route::post('add_instructor', 'addInstructor');
+                Route::post('add_course', 'addCourse');
             });
         });
     });
