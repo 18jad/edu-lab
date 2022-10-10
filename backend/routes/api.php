@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\InstructorsController;
+
 
 
 /*
@@ -43,6 +45,17 @@ Route::group(["prefix" => 'v1.0'], function() {
                 Route::post('add_student', 'addStudent');
                 Route::post('add_instructor', 'addInstructor');
                 Route::post('add_course', 'addCourse');
+            });
+        });
+    });
+    Route::group(['prefix' => 'instructor'], function() {
+        Route::controller(InstructorsController::class)->group(function () {
+            Route::post('login', 'login');
+            Route::middleware(['auth:instructor'])->group(function() {
+                Route::get('logout', 'logout');
+                Route::post('assign_students', 'assignStudents');
+                Route::post('create_assignment', 'createAssignment');
+                Route::post('create_announcement', 'createAnnouncement');
             });
         });
     });
