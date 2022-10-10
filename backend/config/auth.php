@@ -42,11 +42,15 @@ return [
         ],
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'admin'
+            'provider' => 'students'
         ],
         'student' => [
             'driver' => 'jwt',
             'provider' => 'students',
+        ],
+        'instructor' => [
+            'driver' => 'jwt',
+            'provider' => 'instructors',
         ],
         'admin' => [
             'driver' => 'jwt',
@@ -81,6 +85,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
             'table' => 'admin',
+        ],
+        'instructors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Instructor::class,
+            'table' => 'instructors',
         ],
 
         // 'users' => [
