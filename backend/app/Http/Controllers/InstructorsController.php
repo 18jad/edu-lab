@@ -39,4 +39,50 @@ class InstructorsController extends Controller
             ]);
         }
     }
+
+    public function assignStudents(Request $request): JsonResponse
+    {
+        if (isset($request->student_username, $request->course_id)) {
+            $student_username = $request->student_username;
+            $course_id = $request->course_id;
+
+            // check if student is available
+            $student = Student::where('username', $student_username)->first();
+            if(!$student->count()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Student doesn't exits"
+                ]);
+            }
+
+            // check if student is already added to this course
+            $check_student_course = $student->enrolled_courses;
+            if($check_student_course && in_array($course_id, $check_student_course)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Student already enrolled in this course"
+                ]);
+            }
+
+            $student->push('enrolled_courses', $course_id);
+
+            if($student->save()) {
+                return response()->json([
+                    'student' => $student,
+                    'message' => 'Student successfully added to ' . $course_id,
+                    'status' => true,
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Something is missing.',
+                    'status' => false,
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required',
+            ]);
+        }
+    }
 }
