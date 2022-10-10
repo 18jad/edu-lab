@@ -68,5 +68,25 @@ class StudentsController extends Controller
         }
     }
 
+    public function getEnrolledCourses(): JsonResponse
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'Enrolled courses successfully retrieved',
+            'courses' => Student::select('enrolled_courses')->where('_id', Auth::id())->get()
+        ]);
+    }
 
+    public function getAnnouncements(): JsonResponse
+    {
+        $announcements = Student::select('announcements')->where('_id', Auth::id())->get();
+        return $announcements ? response()->json([
+            'status' => true,
+            'message' => 'Announcements successfully retrieved',
+            'announcements' => $announcements
+        ]) : response()->json([
+            'status' => false,
+            'message' => 'Something went wrong',
+        ]);
+    }
 }
