@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class InstructorsController extends Controller
@@ -64,8 +65,10 @@ class InstructorsController extends Controller
                 ]);
             }
 
+            // add the new course to enrolled course array
             $student->push('enrolled_courses', $course_id);
 
+            // check if students successfully enrolled
             if($student->save()) {
                 return response()->json([
                     'student' => $student,
@@ -82,6 +85,48 @@ class InstructorsController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'All fields are required',
+            ]);
+        }
+    }
+
+    public function createAnnouncement(Request $request): JsonResponse
+    {
+        if(isset($request->announcement_title, $request->announcement_body, $request->course_id)) {
+            $announcement_title = $request->announcement_title;
+            $announcement_body = $request->announcement_body;
+            $course_id = $request->course_id;
+
+            // get all students enrolled in course_id
+            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+
+            $check_creation = true;
+
+            // add announcement to all students
+            foreach ($students as $student) {
+                $student->push('announcements', [
+                    'announcement_title' => $announcement_title,
+                    'announcement_body' => $announcement_body
+                ]);
+                if(!$student->save())
+                    $check_creation = false;
+            }
+
+            // check if announcement created
+            if ($check_creation) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Announcements successfully created'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Something went wrong.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required'
             ]);
         }
     }
