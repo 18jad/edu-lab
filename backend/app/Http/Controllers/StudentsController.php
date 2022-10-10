@@ -26,17 +26,47 @@ class StudentsController extends Controller
         } else {
             $student_credentials = $request->only('username', 'password');
             $auth_token = Auth::guard('student')->attempt($student_credentials);
-                return !$auth_token ? response()->json([
-                    'status' => false,
-                    'message' => 'Username or password incorrect'
-                ]) : response()->json([
-                    'status' => true,
-                    'student' => Auth::guard('student')->user(),
-                    'authorization' => [
-                        'auth_token' => $auth_token,
-                        'type' => 'Bearer',
-                    ]
-                ]);
+            return !$auth_token ? response()->json([
+                'status' => false,
+                'message' => 'Username or password incorrect'
+            ]) : response()->json([
+                'status' => true,
+                'student' => Auth::guard('student')->user(),
+                'authorization' => [
+                    'auth_token' => $auth_token,
+                    'type' => 'Bearer',
+                ]
+            ]);
         }
     }
+
+    public function submitAssignment(Request $request): JsonResponse
+    {
+        if (isset($request->assignment_id)) {
+            $assignment_id = $request->assignment_id;
+
+            $remove_assignment = Student::where('_id', Auth::id())->where('assignments.assignment_id', $assignment_id)->pull('assignments', ['assignment_id' => $assignment_id]);
+
+            if ($remove_assignment) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Assignment successfully submitted!',
+                    'student' => Student::where('_id', Auth::id())->get()
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Method unavailable. Try again later',
+                    'student' => Student::where('_id', Auth::id())->get()
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Assignment file is required',
+            ]);
+        }
+    }
+
+
 }
