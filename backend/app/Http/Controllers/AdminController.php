@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Course;
 use App\Models\Instructor;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
 
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string',
@@ -26,14 +27,14 @@ class AdminController extends Controller
             ]);
         } else {
             $admin_credentials = $request->only('username', 'password');
-            $auth_token = Auth::attempt($admin_credentials);
+            $auth_token = Auth::guard('admin')->attempt($admin_credentials);
             return !$auth_token ? response()->json([
                 'status' => false,
                 'message' => 'Username or password incorrect'
             ]) : response()->json([
                 'status' => true,
                 'message' => 'Successfully logged in',
-                'admin' => Auth::user(),
+                'admin' => Auth::guard('admin')->user(),
                 'authorization' => [
                     'auth_token' => $auth_token,
                     'type' => 'Bearer',
@@ -42,7 +43,7 @@ class AdminController extends Controller
         }
     }
 
-    public function addStudent(Request $request): \Illuminate\Http\JsonResponse
+    public function addStudent(Request $request): JsonResponse
     {
         $student = new Student;
         if (isset($request->name, $request->username, $request->password)) {
@@ -81,7 +82,7 @@ class AdminController extends Controller
         }
     }
 
-    public function addInstructor(Request $request): \Illuminate\Http\JsonResponse
+    public function addInstructor(Request $request): JsonResponse
     {
         $instructor = new Instructor;
         if (isset($request->name, $request->username, $request->password)) {
@@ -119,7 +120,7 @@ class AdminController extends Controller
         }
     }
 
-    public function addCourse(Request $request): \Illuminate\Http\JsonResponse
+    public function addCourse(Request $request): JsonResponse
     {
         $course = new Course;
         if (isset($request->name, $request->code)) {
