@@ -60,24 +60,23 @@ class AdminController extends Controller
             $student->name = $request->name;
             $student->username = $request->username;
             $student->password = bcrypt($request->password);
-        }else {
+
+            if($student->save()) {
+                return response()->json([
+                    'student' => $student,
+                    'message' => 'Student successfully created',
+                    'status' => true,
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Something is missing.',
+                    'status' => false,
+                ]);
+            }
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => 'All fields are required',
-            ]);
-        }
-
-
-        if($student->save()) {
-            return response()->json([
-                'student' => $student,
-                'message' => 'Student successfully created',
-                'status' => true,
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Something is missing.',
-                'status' => false,
             ]);
         }
     }
