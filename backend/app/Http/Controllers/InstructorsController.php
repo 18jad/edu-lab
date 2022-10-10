@@ -130,4 +130,47 @@ class InstructorsController extends Controller
             ]);
         }
     }
+
+    public function createAssignment(Request $request): JsonResponse
+    {
+        if(isset($request->assignment_title, $request->assignment_body, $request->course_id)) {
+            $assignment_title = $request->assignment_title;
+            $assignment_body = $request->assignment_body;
+            $course_id = $request->course_id;
+
+            // get all students enrolled in course_id
+            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+
+            $check_creation = true;
+
+            // add assignment to all students
+            foreach ($students as $student) {
+                $student->push('assignments', [
+                    'assignment_id' => (string)Str::uuid(),
+                    'assignment_title' => $assignment_title,
+                    'assignment_body' => $assignment_body,
+                ]);
+                if(!$student->save())
+                    $check_creation = false;
+            }
+
+            // check if assignment created
+            if ($check_creation) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Assignment successfully created'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Something went wrong.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required'
+            ]);
+        }
+    }
 }
