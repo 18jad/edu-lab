@@ -29,6 +29,10 @@ class Instructor extends Authenticatable implements JWTSubject
         'assigned_courses',
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -29,6 +29,10 @@ class Student extends Authenticatable implements JWTSubject
         'enrolled_courses',
     ];
 
+    protected $hidden = [
+        'password',
+    ];
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
