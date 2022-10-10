@@ -49,7 +49,7 @@ class InstructorsController extends Controller
 
             // check if student is available
             $student = Student::where('username', $student_username)->first();
-            if(!$student->count()) {
+            if (!$student->count()) {
                 return response()->json([
                     'status' => false,
                     'message' => "Student doesn't exits"
@@ -58,7 +58,7 @@ class InstructorsController extends Controller
 
             // check if student is already added to this course
             $check_student_course = $student->enrolled_courses;
-            if($check_student_course && in_array($course_id, $check_student_course)) {
+            if ($check_student_course && in_array($course_id, $check_student_course)) {
                 return response()->json([
                     'status' => false,
                     'message' => "Student already enrolled in this course"
@@ -69,7 +69,7 @@ class InstructorsController extends Controller
             $student->push('enrolled_courses', $course_id);
 
             // check if students successfully enrolled
-            if($student->save()) {
+            if ($student->save()) {
                 return response()->json([
                     'student' => $student,
                     'message' => 'Student successfully added to ' . $course_id,
@@ -91,7 +91,7 @@ class InstructorsController extends Controller
 
     public function createAnnouncement(Request $request): JsonResponse
     {
-        if(isset($request->announcement_title, $request->announcement_body, $request->course_id)) {
+        if (isset($request->announcement_title, $request->announcement_body, $request->course_id)) {
             $announcement_title = $request->announcement_title;
             $announcement_body = $request->announcement_body;
             $course_id = $request->course_id;
@@ -107,7 +107,7 @@ class InstructorsController extends Controller
                     'announcement_title' => $announcement_title,
                     'announcement_body' => $announcement_body
                 ]);
-                if(!$student->save())
+                if (!$student->save())
                     $check_creation = false;
             }
 
@@ -133,7 +133,7 @@ class InstructorsController extends Controller
 
     public function createAssignment(Request $request): JsonResponse
     {
-        if(isset($request->assignment_title, $request->assignment_body, $request->course_id)) {
+        if (isset($request->assignment_title, $request->assignment_body, $request->course_id)) {
             $assignment_title = $request->assignment_title;
             $assignment_body = $request->assignment_body;
             $course_id = $request->course_id;
@@ -150,7 +150,7 @@ class InstructorsController extends Controller
                     'assignment_title' => $assignment_title,
                     'assignment_body' => $assignment_body,
                 ]);
-                if(!$student->save())
+                if (!$student->save())
                     $check_creation = false;
             }
 
