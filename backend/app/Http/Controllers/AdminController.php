@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Course;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -82,7 +83,7 @@ class AdminController extends Controller
 
     public function addInstructor(Request $request): \Illuminate\Http\JsonResponse
     {
-        $instructor = new Instructor();
+        $instructor = new Instructor;
         if (isset($request->name, $request->username, $request->password)) {
             $already_exists = Student::where('username', $request->username);
 
@@ -108,6 +109,43 @@ class AdminController extends Controller
             return response()->json([
                 'instructor' => $instructor,
                 'message' => 'Instructor successfully created',
+                'status' => true,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong.',
+                'status' => false,
+            ]);
+        }
+    }
+
+    public function addCourse(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $course = new Course;
+        if (isset($request->name, $request->code)) {
+            $already_exists = Student::where('code', $request->code);
+
+            // check if the course already exists
+            if($already_exists->count()) {
+                return response()->json([
+                    'course' => 'Course already exists',
+                    'status' => false,
+                ]);
+            }
+
+            $course->name = $request->name;
+            $course->code = $request->code;
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'All fields are required',
+            ]);
+        }
+
+        if($course->save()) {
+            return response()->json([
+                'course' => $course,
+                'message' => 'Course successfully created',
                 'status' => true,
             ]);
         } else {
