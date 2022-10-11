@@ -14,7 +14,7 @@ const InstructorStudents = () => {
               <input
                 type='text'
                 className={styles.input}
-                placeholder='# Student ID'
+                placeholder='Student username'
                 autoComplete='off'
                 spellCheck='false'
                 required
