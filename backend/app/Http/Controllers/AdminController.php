@@ -165,5 +165,14 @@ class AdminController extends Controller
         ]);
     }
 
+    public function getInstructors(): JsonResponse
+    {
+        $instructors = Instructor::all();
+        return response()->json([
+            'status' => (bool)$instructors,
+            'instructors' => $instructors ?: "No instructors available",
+        ]);
+    }
+
 
 }
