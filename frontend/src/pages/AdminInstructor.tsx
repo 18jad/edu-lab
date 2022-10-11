@@ -138,7 +138,7 @@ const AdminInstructor = () => {
               </select>
             </div>
             <button type='submit' className={styles.addButton}>
-              Add student
+              Add instructor
             </button>
           </form>
           <div className={styles.table}>
