@@ -34,7 +34,8 @@ class InstructorsController extends Controller
                 'message' => 'Username or password incorrect'
             ]) : response()->json(data: [
                 'status' => true,
-                'student' => Auth::guard('instructor')->user(),
+                'message' => 'Successfully logged in',
+                'instructor' => Auth::guard('instructor')->user(),
                 'authorization' => [
                     'auth_token' => $auth_token,
                     'type' => 'Bearer',
@@ -66,7 +67,7 @@ class InstructorsController extends Controller
             // check if students successfully enrolled
             if ($student->save()) {
                 return response()->json([
-                    'student' => $student->enrolled_courses,
+                    'instructor' => $student->enrolled_courses,
                     'message' => 'Student successfully added to ' . $course_id,
                     'status' => true,
                 ]);
