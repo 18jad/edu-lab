@@ -1,8 +1,29 @@
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import TableRow from "../components/TableRow";
+import { admin } from "../hooks/AxiosFetch";
 import styles from "../styles/AdminStudentsPage.module.scss";
 
+interface Course {
+  _id: string;
+  name: string;
+  code: string;
+}
+
+interface Courses {
+  courses: Course[];
+}
+
 const AdminCourses = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+
+  useEffect(() => {
+    admin.get<Courses>("/courses").then((response) => {
+      let data = response.data;
+      setCourses(data.courses);
+    });
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <Sidebar type='admin' />
@@ -36,7 +57,7 @@ const AdminCourses = () => {
               /> */}
             </div>
             <button type='submit' className={styles.addButton}>
-              Add student
+              Add Course
             </button>
           </form>
           <div className={styles.table}>
@@ -44,7 +65,9 @@ const AdminCourses = () => {
               <p>Code</p>
               <p>Name</p>
             </div>
-            <TableRow name='Computer Science' id='MIS302' />
+            {courses.map((course) => (
+              <TableRow name={course.name} key={course._id} id={course.code} />
+            ))}
           </div>
         </div>
       </main>
