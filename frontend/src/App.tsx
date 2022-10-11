@@ -18,16 +18,26 @@ import StudentDashboard from "./pages/StudentDashboard";
 import StudentLogin from "./pages/StudentLogin";
 
 const App = () => {
+  const adminCheck = localStorage.getItem("admin_access_token") === null;
+
   return (
     <Routes>
       <Route path='/' element={<LandingPage />} />
       <Route path='/admin'>
-        <Route path='login' element={<AdminLogin />} />
+        <Route
+          path='login'
+          element={
+            <ProtectedRoute
+              user={adminCheck}
+              redirect='../dashboard'
+              access={<AdminLogin />}
+            />
+          }></Route>
         <Route
           path='dashboard'
           element={
             <ProtectedRoute
-              user={true}
+              user={!adminCheck}
               redirect='../login'
               access={<AdminDashboard />}
             />
@@ -36,7 +46,7 @@ const App = () => {
           path='dashboard/students'
           element={
             <ProtectedRoute
-              user={true}
+              user={!adminCheck}
               redirect='../login'
               access={<AdminStudents />}
             />
@@ -45,7 +55,7 @@ const App = () => {
           path='dashboard/instructors'
           element={
             <ProtectedRoute
-              user={true}
+              user={!adminCheck}
               redirect='../login'
               access={<AdminInstructor />}
             />
@@ -54,7 +64,7 @@ const App = () => {
           path='dashboard/courses'
           element={
             <ProtectedRoute
-              user={true}
+              user={!adminCheck}
               redirect='../login'
               access={<AdminCourses />}
             />
