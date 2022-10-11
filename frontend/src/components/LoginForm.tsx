@@ -1,18 +1,23 @@
+import { FC } from "react";
 import styles from "../styles/LoginForm.module.scss";
 
-const LoginForm = ({ type }: any) => {
+interface Form {
+  type: string;
+}
+
+const LoginForm: FC<Form> = ({ type }) => {
   return (
     <form className={styles.loginForm}>
       <header className={styles.formHeader}>{type}</header>
       <div className={styles.formBody}>
         <div className={styles.inputContainer}>
-          <label htmlFor='emailInput' className={styles.inputLabel}>
-            Email
+          <label htmlFor='usernameInput' className={styles.inputLabel}>
+            Username
           </label>
           <input
-            type='email'
-            name='email'
-            id='emailInput'
+            type='text'
+            name='username'
+            id='usernameInput'
             className={styles.input}
             required
           />
