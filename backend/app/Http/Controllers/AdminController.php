@@ -84,7 +84,7 @@ class AdminController extends Controller
     public function addInstructor(Request $request): JsonResponse
     {
         $instructor = new Instructor;
-        if (isset($request->name, $request->username, $request->password)) {
+        if (isset($request->name, $request->username, $request->password, $request->course)) {
             $already_exists = Student::where('username', $request->username);
 
             // check if instructor user already exists
@@ -98,6 +98,7 @@ class AdminController extends Controller
             $instructor->name = $request->name;
             $instructor->username = $request->username;
             $instructor->password = bcrypt($request->password);
+            $instructor->assigned_course = $request->course;
         } else {
             return response()->json([
                 'status' => false,
