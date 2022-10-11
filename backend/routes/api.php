@@ -35,6 +35,7 @@ Route::group(["prefix" => 'v1.0'], function() {
                 Route::post('submit_assignment', 'submitAssignment');
                 Route::get('courses', 'getEnrolledCourses');
                 Route::get('announcements', 'getAnnouncements');
+                Route::get('assignments', 'getAssignments');
             });
         });
     });
