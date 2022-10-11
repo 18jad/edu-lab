@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import Sidebar from "../components/Sidebar";
 import TableRow from "../components/TableRow";
 import { admin } from "../hooks/AxiosFetch";
@@ -16,6 +17,8 @@ interface Courses {
 
 const AdminCourses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [courseName, setcourseName] = useState<string>("");
+  const [courseCode, setcourseCode] = useState<string>("");
 
   useEffect(() => {
     admin.get<Courses>("/courses").then((response) => {
@@ -24,13 +27,50 @@ const AdminCourses = () => {
     });
   }, []);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("admin_access_token")}`,
+      },
+    };
+    admin
+      .post(
+        "/add_course",
+        {
+          name: courseName,
+          code: courseCode,
+        },
+        config,
+      )
+      .then((response) => {
+        let data = response.data,
+          success = data.status;
+        toast(success ? `✅ ${data.message}` : `❌ ${data.message}`, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        if (success) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 2700);
+        }
+      });
+  };
+
   return (
     <div className={styles.wrapper}>
       <Sidebar type='admin' />
       <main>
         <p className={styles.header}>Courses</p>
         <div className={styles.content}>
-          <form className={styles.addStudents}>
+          <form className={styles.addStudents} onSubmit={handleSubmit}>
             <p className={styles.addHeader}>Add new course</p>
             <div className={styles.inputContainer}>
               <input
@@ -39,6 +79,9 @@ const AdminCourses = () => {
                 placeholder='Course name'
                 autoComplete='off'
                 spellCheck='false'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setcourseName(e.target.value)
+                }
                 required
               />
               <input
@@ -47,14 +90,12 @@ const AdminCourses = () => {
                 placeholder='Course code'
                 autoComplete='off'
                 spellCheck='false'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setcourseCode(e.target.value)
+                }
+                maxLength={5}
                 required
               />
-              {/* <input
-                type='password'
-                className={styles.input}
-                placeholder='Password'
-                required
-              /> */}
             </div>
             <button type='submit' className={styles.addButton}>
               Add Course
@@ -71,6 +112,7 @@ const AdminCourses = () => {
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 };
