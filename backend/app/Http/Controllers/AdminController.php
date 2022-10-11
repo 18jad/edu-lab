@@ -174,5 +174,12 @@ class AdminController extends Controller
         ]);
     }
 
-
+    public function getCourses(): JsonResponse
+    {
+        $courses = Course::all();
+        return response()->json([
+            'status' => (bool)$courses,
+            'courses' => $courses ?: "No courses available",
+        ]);
+    }
 }
