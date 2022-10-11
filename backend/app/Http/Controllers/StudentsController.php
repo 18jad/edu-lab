@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -87,6 +88,15 @@ class StudentsController extends Controller
         ]) : response()->json([
             'status' => false,
             'message' => 'Something went wrong',
+        ]);
+    }
+
+    public function getAssignments(): JsonResponse
+    {
+        $assignments = Student::select('assignments')->where('_id', Auth::id())->get();
+        return response()->json([
+            'status' => (bool)$assignments,
+            'assignments' => $assignments ?: "No assignments available",
         ]);
     }
 }
