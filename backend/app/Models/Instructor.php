@@ -11,6 +11,7 @@ use Jenssegers\Mongodb\Auth\User as Authenticatable;
  * @property mixed $username
  * @property mixed $name
  * @property mixed $password
+ * @property mixed $assigned_course
  * @method static where(string $string, mixed $username)
  */
 
@@ -26,7 +27,7 @@ class Instructor extends Authenticatable implements JWTSubject
         'name',
         'username',
         'password',
-        'assigned_courses',
+        'assigned_course',
     ];
 
     protected $hidden = [
