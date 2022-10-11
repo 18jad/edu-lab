@@ -155,4 +155,15 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    public function getStudents(): JsonResponse
+    {
+        $students = Student::all();
+        return response()->json([
+            'status' => (bool)$students,
+            'students' => $students ?: "No students available",
+        ]);
+    }
+
+
 }
