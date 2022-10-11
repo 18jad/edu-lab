@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Array_;
 
 
 class InstructorsController extends Controller
@@ -56,22 +58,15 @@ class InstructorsController extends Controller
                 ]);
             }
 
-            // check if student is already added to this course
-            $check_student_course = $student->enrolled_courses;
-            if ($check_student_course && in_array($course_id, $check_student_course)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => "Student already enrolled in this course"
-                ]);
-            }
+            $course = Course::where('code', $course_id)->get();
 
             // add the new course to enrolled course array
-            $student->push('enrolled_courses', $course_id);
+            $student->push('enrolled_courses', json_decode($course));
 
             // check if students successfully enrolled
             if ($student->save()) {
                 return response()->json([
-                    'student' => $student,
+                    'student' => $student->enrolled_courses,
                     'message' => 'Student successfully added to ' . $course_id,
                     'status' => true,
                 ]);
