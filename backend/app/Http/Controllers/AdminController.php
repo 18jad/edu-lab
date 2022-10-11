@@ -52,7 +52,7 @@ class AdminController extends Controller
             // check if student user already exists
             if($already_exists->count()) {
                 return response()->json([
-                    'student' => 'Student username already exists',
+                    'message' => 'Student username already exists',
                     'status' => false,
                 ]);
             }
