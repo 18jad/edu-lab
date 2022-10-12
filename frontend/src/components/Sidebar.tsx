@@ -79,6 +79,9 @@ const Sidebar = ({ type }: any) => {
           </Link>
         </ul>
       )}
+      <Link to='/'>
+        <span>Home</span>
+      </Link>
     </div>
   );
 };
