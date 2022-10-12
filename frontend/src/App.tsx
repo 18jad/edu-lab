@@ -21,6 +21,7 @@ const App = () => {
   const adminCheck = localStorage.getItem("admin_access_token") === null;
   const instructorCheck =
     localStorage.getItem("instructor_access_token") === null;
+  const studentCheck = localStorage.getItem("student_access_token") === null;
 
   return (
     <Routes>
@@ -120,12 +121,20 @@ const App = () => {
           }></Route>
       </Route>
       <Route path='/student'>
-        <Route path='login' element={<StudentLogin />} />
+        <Route
+          path='login'
+          element={
+            <ProtectedRoute
+              user={studentCheck}
+              redirect='../dashboard'
+              access={<StudentLogin />}
+            />
+          }></Route>
         <Route
           path='dashboard'
           element={
             <ProtectedRoute
-              user={true}
+              user={!studentCheck}
               redirect='../login'
               access={<StudentDashboard />}
             />
@@ -134,7 +143,7 @@ const App = () => {
           path='dashboard/assignments'
           element={
             <ProtectedRoute
-              user={true}
+              user={!studentCheck}
               redirect='../login'
               access={<StudentAssignments />}
             />
@@ -143,7 +152,7 @@ const App = () => {
           path='dashboard/courses'
           element={
             <ProtectedRoute
-              user={true}
+              user={!studentCheck}
               redirect='../login'
               access={<StudentCourses />}
             />
