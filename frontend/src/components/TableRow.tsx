@@ -8,6 +8,7 @@ interface Assignment {
 
 const TableRow = ({ id, name, action, actionId, title }: any) => {
   const [assignmentId, setAssignmentId] = useState<any>(actionId);
+  const [hidden, setHidden] = useState<boolean>(true);
 
   const handleSubmit = () => {
     student
@@ -21,9 +22,20 @@ const TableRow = ({ id, name, action, actionId, title }: any) => {
     <div className={styles.row}>
       {id ? <p className={styles.rowId}>#{id}</p> : ""}
       {title ? <p className={styles.rowId}>{title}</p> : ""}
-      <p className={styles.rowName} title={name}>
+      <p
+        className={styles.rowName}
+        title={name}
+        onClick={() => setHidden(!hidden)}>
         {name}
       </p>
+      <textarea
+        placeholder='name'
+        className={styles.textBody}
+        readOnly
+        onClick={() => setHidden(!hidden)}
+        hidden={hidden}>
+        {name}
+      </textarea>
       {action ? (
         <>
           <input
@@ -32,7 +44,7 @@ const TableRow = ({ id, name, action, actionId, title }: any) => {
             id='assigmentSubmit'
             accept='.txt, .docx'
             onChange={handleSubmit}
-            hidden
+            hidden={hidden}
           />
           <label
             htmlFor='assigmentSubmit'
