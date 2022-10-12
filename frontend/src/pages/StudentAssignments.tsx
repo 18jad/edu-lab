@@ -42,6 +42,7 @@ const StudentAssignments = () => {
                 name={assignment.assignment_body}
                 title={assignment.assignment_title}
                 key={assignment.assignment_id}
+                actionId={assignment.assignment_id}
                 action='Submit'
               />
             ))}
