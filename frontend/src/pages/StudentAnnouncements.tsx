@@ -37,9 +37,9 @@ const StudentAnnouncements = () => {
             </div>
             {announcements.map((announcement, index) => (
               <TableRow
+                title={announcement.announcement_title}
                 name={announcement.announcement_body}
                 key={index}
-                id={announcement.announcement_title}
               />
             ))}
           </div>
