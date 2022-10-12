@@ -44,7 +44,7 @@ const TableRow = ({ id, name, action, actionId, title }: any) => {
             id='assigmentSubmit'
             accept='.txt, .docx'
             onChange={handleSubmit}
-            hidden={hidden}
+            hidden
           />
           <label
             htmlFor='assigmentSubmit'
