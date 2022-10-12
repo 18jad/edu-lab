@@ -92,7 +92,7 @@ class InstructorsController extends Controller
             $course_id = $request->course_id;
 
             // get all students enrolled in course_id
-            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+            $students = Student::where('enrolled_courses.code', 'all', [$course_id])->get();
 
             $check_creation = true;
 
@@ -134,7 +134,7 @@ class InstructorsController extends Controller
             $course_id = $request->course_id;
 
             // get all students enrolled in course_id
-            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+            $students = Student::where('enrolled_courses.code', 'all', [$course_id])->get();
 
             $check_creation = true;
 
