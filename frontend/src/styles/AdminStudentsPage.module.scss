@@ -42,6 +42,18 @@ $border-color: rgb(68, 68, 68);
       font-weight: 500;
     }
 
+    .annTable {
+      width: 60%;
+      background: #fefefe;
+      height: 80%;
+      overflow-y: auto;
+      margin-bottom: 55px;
+      color: var(--black);
+      border: 1px solid $border-color;
+      box-shadow: 0 5px 15px 1px #3333;
+      font-weight: 500;
+    }
+
     .row:last-child {
       border-bottom: none;
     }
@@ -54,6 +66,7 @@ $border-color: rgb(68, 68, 68);
       text-align: center;
       padding: 10px 20px;
       border-bottom: 1px solid $border-color;
+      position: relative;
     }
 
     .tableInfo {
@@ -86,6 +99,7 @@ $border-color: rgb(68, 68, 68);
       overflow: hidden;
       white-space: nowrap;
       max-width: 200px;
+      position: relative;
       text-align: right;
     }
 
@@ -199,4 +213,18 @@ $border-color: rgb(68, 68, 68);
   border: 1px solid $border-color;
   box-shadow: 0 5px 15px 1px #3333;
   font-weight: 500;
+}
+
+.textBody {
+  position: absolute;
+  right: 0;
+  z-index: 10000000000000;
+  height: 200px;
+  width: 240px;
+  resize: none;
+  outline: none;
+  background: #fff3;
+  backdrop-filter: blur(4px);
+  border: 1px solid #3334;
+  top: 45px;
 }

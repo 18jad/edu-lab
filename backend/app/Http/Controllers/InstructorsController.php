@@ -9,7 +9,6 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use PhpParser\Node\Expr\Array_;
 
 
 class InstructorsController extends Controller
@@ -52,7 +51,7 @@ class InstructorsController extends Controller
 
             // check if student is available
             $student = Student::where('username', $student_username)->first();
-            if (!$student->count()) {
+            if (!$student || !$student->count()) {
                 return response()->json([
                     'status' => false,
                     'message' => "Student doesn't exits"
@@ -93,7 +92,7 @@ class InstructorsController extends Controller
             $course_id = $request->course_id;
 
             // get all students enrolled in course_id
-            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+            $students = Student::where('enrolled_courses.code', 'all', [$course_id])->get();
 
             $check_creation = true;
 
@@ -135,7 +134,7 @@ class InstructorsController extends Controller
             $course_id = $request->course_id;
 
             // get all students enrolled in course_id
-            $students = Student::where('enrolled_courses', 'all', [$course_id])->get();
+            $students = Student::where('enrolled_courses.code', 'all', [$course_id])->get();
 
             $check_creation = true;
 

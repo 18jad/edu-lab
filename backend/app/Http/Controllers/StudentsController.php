@@ -32,6 +32,7 @@ class StudentsController extends Controller
                 'message' => 'Username or password incorrect'
             ]) : response()->json([
                 'status' => true,
+                'message' => 'Successfully logged in',
                 'student' => Auth::guard('student')->user(),
                 'authorization' => [
                     'auth_token' => $auth_token,

@@ -29,20 +29,11 @@ const AdminCourses = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("admin_access_token")}`,
-      },
-    };
     admin
-      .post(
-        "/add_course",
-        {
-          name: courseName,
-          code: courseCode,
-        },
-        config,
-      )
+      .post("/add_course", {
+        name: courseName,
+        code: courseCode,
+      })
       .then((response) => {
         let data = response.data,
           success = data.status;

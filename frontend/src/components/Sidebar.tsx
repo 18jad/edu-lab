@@ -69,6 +69,14 @@ const Sidebar = ({ type }: any) => {
               <span className={styles.listText}>Courses</span>
             </li>
           </Link>
+          <Link
+            to='/student/dashboard/announcements'
+            className={styles.listLink}>
+            <li className={styles.listBullet}>
+              <Announcements height='30' />
+              <span className={styles.listText}>Announcements</span>
+            </li>
+          </Link>
         </ul>
       )}
     </div>
